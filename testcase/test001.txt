@@ -1,3 +1,13 @@
-iconst 3
+fconst -3.625
+iconst -6
+istore b
+iconst 9
+par b
+iconst -6
 istore a
-val a
+fconst 1.625
+istore b
+istore d
+top
+fstore d
+fconst 9.666

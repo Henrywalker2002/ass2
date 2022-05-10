@@ -148,7 +148,7 @@ float Stack::top(int count) {
 }
 
 float Stack::top1(int count) {
-	if (size == 0) {
+	if (this->size == 0) {
 		throw StackEmpty(count);
 	}
 	return arr[size - 1];
@@ -305,13 +305,19 @@ void Myclass::running(std::string filename) {
 			string val = line.substr(pos + 1, line.size() - pos);
 			if (st->top1(count) != 0) throw TypeMisMatch(count);
 			Node* newNode = new Node(val, 0, st->top(count));
+			if (this->sizeOfTree == this->localVarSpaceSize - 1) throw LocalSpaceFull(count);
 			this->root = insert(root, newNode);
+			this->sizeOfTree++;
+			st->pop();
 		}
 		else if (act == "fstore") {
 			string val = line.substr(pos + 1, line.size() - pos);
 			if (st->top1(count) != 1) throw TypeMisMatch(count);
 			Node* newNode = new Node(val, 1, st->top(count));
+			if (this->sizeOfTree == this->localVarSpaceSize - 1) throw LocalSpaceFull(count);
 			this->root = insert(root, newNode);
+			this->sizeOfTree++;
+			st->pop();
 		}
 		else if (act == "iadd") {
 			calculatorInt(st, count, '+');
@@ -409,10 +415,10 @@ void Myclass::running(std::string filename) {
 			cout << node->data << endl;
 		}
 		else if (act == "par") {
-			string var = line.substr(pos, line.size() - pos);
+			string var = line.substr(pos + 1, line.size() - pos);
 			Node* node = search(root, var);
 			if (!node) throw UndefinedVariable(count);
-			if (node->key == root->key) cout << "NULL\n";
+			if (node->key == root->key) cout << "null\n";
 			else findParent(root, var, "");
 		}
 		else if (act == "i2f") {
